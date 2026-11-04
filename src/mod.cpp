@@ -16,7 +16,8 @@ void load(openrac::Mod& mod){
     show_wallet=mod.setting<bool>("show_wallet");
     purchase_notice=mod.setting<bool>("purchase_notice");
     mod.hook<openrac::rac1::Vendor_BuildItemList>([](auto original,std::int32_t skip){
-        original(skip); vendor_opened=true;
+        original(skip);
+        if(skip==0) vendor_opened=true;
     });
     mod.hook<openrac::rac1::Item_Give>([](auto original,std::int32_t id,std::int32_t equip){
         original(id,equip);
