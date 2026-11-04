@@ -9,6 +9,13 @@ openrac::Mod* g=nullptr;
 bool vendor_opened=false;
 int acquired_item=-1;
 bool show_wallet=true, purchase_notice=true;
+int notice_frames=0;
+void notice(const std::string& text){
+    if(g!=nullptr && g->has_notice()){
+        g->play_notice(text);
+        notice_frames=120;
+    }
+}
 }
 void load(openrac::Mod& mod){
     if(mod.game()!="rac1" || !mod.has_world()) throw openrac::Error("Improved Vendor requires RAC1 interface 1.9+");
@@ -27,13 +34,14 @@ void load(openrac::Mod& mod){
     mod.on_frame([]{
         if(vendor_opened){
             vendor_opened=false;
-            if(show_wallet && g->has_notice()) g->play_notice(qol::wallet(g->bolts()));
+            if(show_wallet) notice(qol::wallet(g->bolts()));
         }
         if(acquired_item>=0){
             const int id=acquired_item; acquired_item=-1;
-            if(purchase_notice && g->has_notice()) g->play_notice(qol::acquired(id,g->bolts()));
+            if(purchase_notice) notice(qol::acquired(id,g->bolts()));
         }
+        if(notice_frames>0 && --notice_frames==0 && g->has_notice()) g->play_notice("");
     });
     mod.info("vendor wallet and acquisition feedback");
 }
-OPENRAC_MOD_CPP("improved-vendor","0.1.0",load)
+OPENRAC_MOD_CPP("improved-vendor","0.1.1",load)
