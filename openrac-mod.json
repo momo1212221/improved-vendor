@@ -1,6 +1,6 @@
 {
   "format": 2,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": "mo",
   "license": "GPL-3.0-or-later",
   "api": "1.9",
@@ -12,23 +12,9 @@
   },
   "id": "improved-vendor",
   "name": "Improved Vendor",
-  "description": "Adds lightweight vendor feedback: current wallet on vendor open and a clear acquisition notice after item purchases.",
+  "description": "Native RAC1-style vendor info page with wallet and recent purchase; no overlay banner.",
   "hooks": [
     "rac1.vendor.build_item_list",
     "rac1.item.give"
-  ],
-  "settings": [
-    {
-      "key": "show_wallet",
-      "name": "Show bolts when vendor opens",
-      "type": "bool",
-      "default": true
-    },
-    {
-      "key": "purchase_notice",
-      "name": "Show purchase/acquisition notice",
-      "type": "bool",
-      "default": true
-    }
   ]
 }
